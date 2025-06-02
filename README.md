@@ -22,4 +22,3 @@ WEON_ORGANIA_PY_TEST/
 ├── requirements.txt
 ├── README.md
 └── .env
-
