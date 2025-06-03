@@ -2,10 +2,13 @@ from fastapi import FastAPI
 from app.api.routs_reviews.routs import router as reviews_router
 from app.api.health_check.routs import router as health_check_router
 from app.config import config
+from app.clients.database_client import init_db
 import uvicorn
 
 def create_application():
     app = FastAPI(title="Weon Organia - Classificação de Avaliações")
+
+    init_db()
 
     routers = [reviews_router, health_check_router]
     default_responses = {
