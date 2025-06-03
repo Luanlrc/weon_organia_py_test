@@ -17,7 +17,7 @@ class Review(BaseModel):
     client_name: str
     avaliation_date: date
     avaliation: str
-    avaliation_type: str
+    avaliation_type: str | None = None
 
 class ReviewResponse(Review):
     id: int
