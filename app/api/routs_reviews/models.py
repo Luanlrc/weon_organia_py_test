@@ -1,8 +1,7 @@
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Column, Integer, String, Date
 from pydantic import BaseModel
 from datetime import date
-from typing import Optional
-from sqlalchemy import Column, Integer, String, Date
-from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
 

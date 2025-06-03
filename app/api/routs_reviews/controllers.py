@@ -1,6 +1,7 @@
-from sqlalchemy.orm import Session
-from app.clients.database_client import SessionLocal
 from app.api.routs_reviews.models import Review, ReviewDB, ReviewResponse
+from app.clients.database_client import SessionLocal
+from app.sql.config import load_sql
+from sqlalchemy import text
 
 class ReviewController:
     def list_reviews(self):
@@ -34,6 +35,16 @@ class ReviewController:
             return ReviewResponse.model_validate(db_review)
 
     def get_report(self, start_date: str, end_date: str):
-        return {"message": "em construção"}
+        query = load_sql("report_reviews.sql")
+        with SessionLocal() as db:
+            result = db.execute(
+                text(query),
+                {"start_date": start_date, "end_date": end_date}
+            ).fetchall()
+
+            return [
+                {"avaliation_type": row[0], "total": row[1]}
+                for row in result
+            ]
 
 review_controller = ReviewController()
