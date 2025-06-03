@@ -19,3 +19,10 @@ class Review(BaseModel):
     avaliation_date: date
     avaliation: str
     avaliation_type: str
+
+class ReviewResponse(Review):
+    id: int
+
+    model_config = {
+        "from_attributes": True
+    }
