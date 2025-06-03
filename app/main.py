@@ -1,14 +1,13 @@
 from fastapi import FastAPI
 from app.api.routs_reviews.routs import router as reviews_router
 from app.api.health_check.routs import router as health_check_router
-from app.api.default_routs import router as default_router
 from app.config import config
 import uvicorn
 
 def create_application():
     app = FastAPI(title="Weon Organia - Classificação de Avaliações")
 
-    routers = [reviews_router, health_check_router, default_router]
+    routers = [reviews_router, health_check_router]
     default_responses = {
         401: {"description": "Unauthorized"},
         403: {"description": "Forbidden"},

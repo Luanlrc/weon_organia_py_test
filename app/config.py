@@ -7,4 +7,7 @@ class Settings(BaseSettings):
     PORT: int = 8000
     RELOADED: bool = True
 
+    # DATABASE
+    DATABASE_URL: str = "postgresql://postgres:postgres@localhost:5432/weon_db"
+
 config = Settings()
