@@ -13,6 +13,14 @@ BASE_URL = "http://weon_api:8000"
 
 
 async def wait_for_api(retries=30, delay=1):
+    """
+    Args:
+        retries (int): Number of retries.
+        delay (int): Delay between retries.
+
+    Raises:
+        RuntimeError: If API doesn't respond in time.
+    """
     for attempt in range(1, retries + 1):
         try:
             async with AsyncClient() as client:
@@ -28,6 +36,10 @@ async def wait_for_api(retries=30, delay=1):
 
 @pytest.mark.asyncio
 async def test_create_review():
+    """
+    Asserts:
+        HTTP 200 response and expected review data fields.
+    """
     await wait_for_api()
     async with AsyncClient(base_url=BASE_URL) as ac:
         response = await ac.post(
@@ -47,6 +59,10 @@ async def test_create_review():
 
 @pytest.mark.asyncio
 async def test_list_reviews():
+    """
+    Asserts:
+        HTTP 200 response and valid response format.
+    """
     async with AsyncClient(base_url=BASE_URL) as ac:
         response = await ac.get("/reviews", headers=headers)
         assert response.status_code == 200
@@ -55,6 +71,10 @@ async def test_list_reviews():
 
 @pytest.mark.asyncio
 async def test_get_review_by_id():
+    """
+    Asserts:
+        HTTP 200 and correct review returned.
+    """
     async with AsyncClient(base_url=BASE_URL) as ac:
         post = await ac.post(
             "/reviews",
@@ -75,6 +95,10 @@ async def test_get_review_by_id():
 
 @pytest.mark.asyncio
 async def test_report():
+    """
+    Asserts:
+        HTTP 200 and correct data structure.
+    """
     async with AsyncClient(base_url=BASE_URL) as ac:
         response = await ac.get(
             "/reviews/report",

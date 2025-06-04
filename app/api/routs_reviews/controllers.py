@@ -10,6 +10,10 @@ agent = SentimentAgent()
 
 class ReviewController:
     def list_reviews(self):
+        """
+        Returns:
+            List[ReviewResponse]: List of all stored reviews.
+        """
         with SessionLocal() as db:
             reviews = db.query(ReviewDB).all()
             response_list = []
@@ -20,6 +24,13 @@ class ReviewController:
             return response_list
 
     def get_review_by_id(self, review_id: int):
+        """
+        Args:
+            review_id (int): The ID of the review.
+
+        Returns:
+            ReviewResponse: The review details.
+        """
         with SessionLocal() as db:
             review = db.query(ReviewDB).filter(ReviewDB.id == review_id).first()
             if review:
@@ -27,6 +38,13 @@ class ReviewController:
             return {"error": "Review not found"}
 
     def create_review(self, review: Review):
+        """
+        Args:
+            review (Review): The review data.
+
+        Returns:
+            ReviewResponse: Stored review with classification.
+        """
         with SessionLocal() as db:
             sentiment = agent.classify(review.avaliation)
 
@@ -42,6 +60,14 @@ class ReviewController:
             return ReviewResponse.model_validate(db_review)
 
     def get_report(self, start_date: str, end_date: str):
+        """
+        Args:
+            start_date (str): Start date in YYYY-MM-DD format.
+            end_date (str): End date in YYYY-MM-DD format.
+
+        Returns:
+            List[dict]: Aggregated review counts per sentiment.
+        """
         query = load_sql("report_reviews.sql")
         with SessionLocal() as db:
             result = db.execute(
@@ -50,6 +76,13 @@ class ReviewController:
             return [{"avaliation_type": row[0], "total": row[1]} for row in result]
 
     def test_agent(self, text):
+        """
+        Args:
+            text (str): Text to classify.
+
+        Returns:
+            str: Sentiment classification.
+        """
         sentiment = agent.classify(text)
         return sentiment
 

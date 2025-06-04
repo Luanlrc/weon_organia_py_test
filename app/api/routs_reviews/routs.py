@@ -18,6 +18,10 @@ router = APIRouter()
     include_in_schema=True,
 )
 async def list_reviews():
+    """
+    Returns:
+        List[ReviewResponse]: List of all reviews.
+    """
     return review_controller.list_reviews()
 
 
@@ -30,6 +34,14 @@ async def list_reviews():
     include_in_schema=True,
 )
 async def get_report(start_date: str, end_date: str):
+    """
+    Args:
+        start_date (str): Start date filter.
+        end_date (str): End date filter.
+
+    Returns:
+        List[dict]: Aggregated sentiment counts.
+    """
     return review_controller.get_report(start_date, end_date)
 
 
@@ -42,6 +54,13 @@ async def get_report(start_date: str, end_date: str):
     include_in_schema=True,
 )
 async def get_review_by_id(review_id: int):
+    """
+    Args:
+        review_id (int): Review identifier.
+
+    Returns:
+        ReviewResponse: Review details.
+    """
     return review_controller.get_review_by_id(review_id)
 
 
@@ -54,6 +73,13 @@ async def get_review_by_id(review_id: int):
     include_in_schema=True,
 )
 async def create_review(review: Review):
+    """
+    Args:
+        review (Review): Review data.
+
+    Returns:
+        ReviewResponse: Stored and classified review.
+    """
     return review_controller.create_review(review)
 
 
@@ -65,4 +91,11 @@ async def create_review(review: Review):
     include_in_schema=False,
 )
 async def create_review(text: str):
+    """
+    Args:
+        text (str): Text to classify.
+
+    Returns:
+        str: Sentiment classification.
+    """
     return review_controller.test_agent(text)

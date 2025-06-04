@@ -4,16 +4,29 @@ from app.openai_config import openai_settings
 
 class SentimentAgent:
     """
-    Agente de análise de sentimento baseado em linguagem natural.
-    Recebe uma avaliação de cliente e retorna: positiva, negativa ou neutra.
+    Sentiment analysis agent based on natural language processing.
+
+    This class uses the OpenAI API to classify customer reviews as
+    'positive', 'negative', or 'neutral'.
     """
 
     def __init__(self):
+        """
+        Initializes the sentiment agent with OpenAI model settings,
+        including model name, temperature, and max tokens.
+        """
         self.model = openai_settings.model
         self.temperature = openai_settings.temperature
         self.max_tokens = openai_settings.max_tokens
 
     def classify(self, customer_text: str) -> str:
+        """
+        Args:
+            customer_text (str): The customer's review text.
+
+        Returns:
+            str: Sentiment classification (""positiva"", ""neutra"", ""negativa"").
+        """
         prompt = f"""
         Você é um classificador de sentimentos especializado em avaliações de clientes.
 

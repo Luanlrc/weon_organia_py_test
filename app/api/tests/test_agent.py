@@ -14,6 +14,15 @@ BASE_URL = "http://weon_api:8000"
 
 
 async def wait_for_api(url=f"{BASE_URL}/health_check", retries=10, delay=1):
+    """
+    Args:
+        url (str): URL of the health check endpoint.
+        retries (int): Number of retries.
+        delay (int): Delay between retries.
+
+    Raises:
+        RuntimeError: If API doesn't respond in time.
+    """
     for _ in range(retries):
         try:
             async with AsyncClient() as ac:
@@ -28,6 +37,10 @@ async def wait_for_api(url=f"{BASE_URL}/health_check", retries=10, delay=1):
 
 @pytest.mark.asyncio
 async def test_agent_classification():
+    """
+    Asserts:
+        The endpoint responds correctly and returns a valid sentiment.
+    """
     await wait_for_api()
 
     async with AsyncClient(base_url=f"{BASE_URL}") as ac:

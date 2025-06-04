@@ -20,6 +20,16 @@ auth_bearer = FixedTokenBearer(token=config.BEARER_TOKEN)
 
 
 def authenticate(credentials: HTTPBasicCredentials = Depends(security)):
+    """
+    Args:
+        credentials (HTTPBasicCredentials): Username and password provided in request.
+
+    Returns:
+        HTTPBasicCredentials: Validated credentials.
+
+    Raises:
+        HTTPException: If the credentials are invalid.
+    """
     if credentials.username != config.USER or credentials.password != config.PASSWORD:
         raise HTTPException(status_code=401, detail="Credenciais inválidas")
     return credentials
@@ -34,6 +44,10 @@ origins = [
 
 
 def create_application():
+    """
+    Returns:
+        FastAPI: Configured FastAPI instance.
+    """
     app = FastAPI(
         title="Weon Organia - Classificação de Avaliações",
         description="""
@@ -64,6 +78,10 @@ def create_application():
         dependencies=[Depends(authenticate)]
     )
     async def get_swagger_ui():
+        """
+        Returns:
+            HTMLResponse: Swagger UI HTML page.
+        """
         return get_swagger_ui_html(
             openapi_url="/api/openapi.json", title="Weon Organia Docs"
         )
@@ -74,6 +92,10 @@ def create_application():
         dependencies=[Depends(authenticate)]
     )
     async def get_redoc():
+        """
+        Returns:
+            HTMLResponse: Redoc HTML page.
+        """
         return get_redoc_html(
             openapi_url="/api/openapi.json", title="Weon Organia Redoc"
         )
@@ -84,6 +106,10 @@ def create_application():
         dependencies=[Depends(authenticate)],
     )
     async def get_openapi_json():
+        """
+        Returns:
+            dict: OpenAPI schema.
+        """
         return get_openapi(
             title=app.title,
             version=app.version,
