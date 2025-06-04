@@ -64,19 +64,19 @@ weon_organia_py_test/
 ```
 
 ### 2. Crie e configure o arquivo .env
-utilize o modelo .local.env
-Edite o .env com sua chave da OpenAI
+Utilize o modelo `.local.env`  
+Edite o `.env` com sua chave da OpenAI
 
-###3. Suba os serviços com Docker Compose
+### 3. Suba os serviços com Docker Compose
 docker compose up --build
 
-###4. Reiniciar containers (se necessário)
+### 4. Reiniciar containers (se necessário)
 docker compose restart
 
-###5. Adicionou nova biblioteca no requirements.txt?
+### 5. Adicionou nova biblioteca no requirements.txt?
 docker compose build --no-cache
 docker compose up -d   # -d para rodar em segundo plano
 
-###6. Quer limpar completamente o banco?
+### 6. Quer limpar completamente o banco?
 Como o banco usa volume persistente, para resetar tudo:
 docker compose down -v
