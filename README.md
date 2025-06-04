@@ -61,6 +61,7 @@ weon_organia_py_test/
 ├── Dockerfile
 ├── README.md
 └── requirements.txt
+```
 
 ### 2. Crie e configure o arquivo .env
 utilize o modelo .local.env
