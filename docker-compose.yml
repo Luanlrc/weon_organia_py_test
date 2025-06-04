@@ -1,4 +1,18 @@
 services:
+  test:
+    build: .
+    container_name: weon_test
+    command: pytest
+    volumes:
+      - .:/app
+    working_dir: /app
+    environment:
+      - PYTHONPATH=/app
+    env_file:
+      - .env
+    depends_on:
+      - db
+
   api:
     build: .
     container_name: weon_api
