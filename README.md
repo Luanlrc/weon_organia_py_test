@@ -24,30 +24,41 @@ Este projeto é uma API REST construída com **FastAPI** que classifica automati
 
 ### 1. Clone o repositório
 ```bash
-git clone https://github.com/seuusuario/weon_organia_py_test.git
+git clone https://github.com/Luanlrc/weon_organia_py_test.git
 cd weon_organia_py_test
 
-
-WEON_ORGANIA_PY_TEST/
+weon_organia_py_test/
 ├── app/
 │   ├── agents/
-│   │   └── agents_config.py 
+│   │   ├── agents_config.py
+│   │   └── sentiment_agent.py
 │   ├── api/
-│   │   └── routs_reviews/  
-│   │       ├── controllers.py
-│   │       ├── models.py
-│   │       └── routs.py
+│   │   ├── health_check/
+│   │   │   ├── models.py
+│   │   │   └── routs.py
+│   │   ├── routs_reviews/
+│   │   │   ├── controllers.py
+│   │   │   ├── models.py
+│   │   │   └── routs.py
+│   │   └── tests/
+│   │       ├── test_agent.py
+│   │       └── test_reviews.py
 │   ├── clients/
 │   │   └── database_client.py
 │   ├── handlers/
 │   │   ├── database_handler.py
 │   │   └── llm_handler.py
 │   ├── sql/
+│   │   ├── __init__.py
 │   │   └── config.py
 │   ├── config.py
-│   └── main.py
-├── tests/
-│   └──test_reviews.py 
-├── requirements.txt
+│   ├── main.py
+│   └── openai_config.py
+├── .env                # não versionado (listado no .gitignore)
+├── .local.env          # modelo de variáveis para desenvolvimento
+├── .gitignore
+├── docker-compose.yml
+├── Dockerfile
 ├── README.md
-└── .env
+└── requirements.txt
+
