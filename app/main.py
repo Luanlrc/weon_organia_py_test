@@ -51,7 +51,20 @@ def create_application():
     app = FastAPI(
         title="Weon Organia - Classificação de Avaliações",
         description="""
-        API para classificação de avaliações de clientes usando IA (OpenAI).
+        
+        API para classificação de avaliações de clientes utilizando inteligência artificial (OpenAI).
+
+        Esta aplicação permite analisar o sentimento de avaliações enviadas por clientes e categorizá-las automaticamente como **positiva**, **negativa** ou **neutra**.  
+        Os dados são armazenados em um banco PostgreSQL e podem ser consultados, analisados por ID ou agrupados em relatórios por período.
+
+        Segurança:
+        - O acesso às rotas é protegido por autenticação Bearer Token fixa, 
+        exigida via cabeçalho `Authorization: Bearer <TOKEN>`.
+
+        - O acesso à documentação interativa (`/api/docs`, `/api/redoc`) e 
+        ao schema OpenAPI (`/api/openapi.json`) foi reconfigurado com segurança 
+        e também requer autenticação via HTTP Basic.
+
         """,
         version="1.0.0",
         docs_url=None,

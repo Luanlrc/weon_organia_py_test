@@ -30,14 +30,14 @@ async def list_reviews():
     tags=["Reviews"],
     response_model=List[dict],
     dependencies=[Depends(auth_bearer)],
-    description="Retorna um relatório de avaliações no período informado, com contagem por tipo (positiva, negativa ou neutra).",
+    description="Retorna um relatório de avaliações no período informado, com contagem por tipo (positiva, negativa ou neutra). Formato YYYY-MM-DD.",
     include_in_schema=True,
 )
 async def get_report(start_date: str, end_date: str):
     """
     Args:
-        start_date (str): Start date filter.
-        end_date (str): End date filter.
+        start_date (str): Start date filter YYYY-MM-DD..
+        end_date (str): End date filter YYYY-MM-DD..
 
     Returns:
         List[dict]: Aggregated sentiment counts.
