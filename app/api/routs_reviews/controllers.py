@@ -1,10 +1,12 @@
-from app.api.routs_reviews.models import Review, ReviewDB, ReviewResponse
-from app.agents.sentiment_agent import SentimentAgent
-from app.clients.database_client import SessionLocal
-from app.sql.config import load_sql
 from sqlalchemy import text
 
+from app.agents.sentiment_agent import SentimentAgent
+from app.api.routs_reviews.models import Review, ReviewDB, ReviewResponse
+from app.clients.database_client import SessionLocal
+from app.sql.config import load_sql
+
 agent = SentimentAgent()
+
 
 class ReviewController:
     def list_reviews(self):
@@ -32,7 +34,7 @@ class ReviewController:
                 client_name=review.client_name,
                 avaliation_date=review.avaliation_date,
                 avaliation=review.avaliation,
-                avaliation_type=sentiment
+                avaliation_type=sentiment,
             )
             db.add(db_review)
             db.commit()
@@ -43,16 +45,13 @@ class ReviewController:
         query = load_sql("report_reviews.sql")
         with SessionLocal() as db:
             result = db.execute(
-                text(query),
-                {"start_date": start_date, "end_date": end_date}
+                text(query), {"start_date": start_date, "end_date": end_date}
             ).fetchall()
-            return [
-                {"avaliation_type": row[0], "total": row[1]}
-                for row in result
-            ]
+            return [{"avaliation_type": row[0], "total": row[1]} for row in result]
 
     def test_agent(self, text):
         sentiment = agent.classify(text)
         return sentiment
+
 
 review_controller = ReviewController()

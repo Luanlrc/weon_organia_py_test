@@ -1,6 +1,7 @@
 from app.handlers.llm_handler import call_openai_model
 from app.openai_config import openai_settings
 
+
 class SentimentAgent:
     """
     Agente de análise de sentimento baseado em linguagem natural.
@@ -43,7 +44,7 @@ class SentimentAgent:
             prompt=prompt,
             model=self.model,
             temperature=self.temperature,
-            max_tokens=self.max_tokens
+            max_tokens=self.max_tokens,
         )
 
         return response.lower().strip()

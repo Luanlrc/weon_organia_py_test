@@ -1,5 +1,7 @@
-from pydantic_settings import BaseSettings
 import os
+
+from pydantic_settings import BaseSettings
+
 
 class Settings(BaseSettings):
     # API
@@ -15,5 +17,6 @@ class Settings(BaseSettings):
 
     # OPENAI
     OPENAI_API_KEY: str = os.getenv("OPENAI_API_KEY")
+
 
 config = Settings()

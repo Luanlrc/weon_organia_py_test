@@ -1,27 +1,29 @@
 from dotenv import load_dotenv
+
 load_dotenv()
 
-from fastapi import FastAPI, Depends, HTTPException
+import uvicorn
+from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.openapi.docs import get_swagger_ui_html, get_redoc_html
+from fastapi.openapi.docs import get_redoc_html, get_swagger_ui_html
 from fastapi.openapi.utils import get_openapi
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
 
-from app.config import config
-from app.api.routs_reviews.routs import router as reviews_router
 from app.api.health_check.routs import router as health_check_router
-from app.clients.database_client import init_db
+from app.api.routs_reviews.routs import router as reviews_router
 from app.auth.bearer_auth import FixedTokenBearer
-
-import uvicorn
+from app.clients.database_client import init_db
+from app.config import config
 
 security = HTTPBasic()
 auth_bearer = FixedTokenBearer(token=config.BEARER_TOKEN)
+
 
 def authenticate(credentials: HTTPBasicCredentials = Depends(security)):
     if credentials.username != config.USER or credentials.password != config.PASSWORD:
         raise HTTPException(status_code=401, detail="Credenciais inválidas")
     return credentials
+
 
 origins = [
     "http://localhost",
@@ -29,6 +31,7 @@ origins = [
     "http://localhost:8000",
     "http://0.0.0.0:8000",
 ]
+
 
 def create_application():
     app = FastAPI(
@@ -39,7 +42,7 @@ def create_application():
         version="1.0.0",
         docs_url=None,
         redoc_url=None,
-        openapi_url=None
+        openapi_url=None,
     )
 
     app.add_middleware(
@@ -55,21 +58,47 @@ def create_application():
     app.include_router(reviews_router)
     app.include_router(health_check_router)
 
-    @app.get("/api/docs", include_in_schema=False, dependencies=[Depends(authenticate)])
+    @app.get(
+        "/api/docs",
+        include_in_schema=False,
+        dependencies=[Depends(authenticate)]
+    )
     async def get_swagger_ui():
-        return get_swagger_ui_html(openapi_url="/api/openapi.json", title="Weon Organia Docs")
+        return get_swagger_ui_html(
+            openapi_url="/api/openapi.json", title="Weon Organia Docs"
+        )
 
-    @app.get("/api/redoc", include_in_schema=False, dependencies=[Depends(authenticate)])
+    @app.get(
+        "/api/redoc",
+        include_in_schema=False,
+        dependencies=[Depends(authenticate)]
+    )
     async def get_redoc():
-        return get_redoc_html(openapi_url="/api/openapi.json", title="Weon Organia Redoc")
+        return get_redoc_html(
+            openapi_url="/api/openapi.json", title="Weon Organia Redoc"
+        )
 
-    @app.get("/api/openapi.json", include_in_schema=False, dependencies=[Depends(authenticate)])
+    @app.get(
+        "/api/openapi.json",
+        include_in_schema=False,
+        dependencies=[Depends(authenticate)],
+    )
     async def get_openapi_json():
-        return get_openapi(title=app.title, version=app.version, routes=app.routes)
+        return get_openapi(
+            title=app.title,
+            version=app.version,
+            routes=app.routes
+        )
 
     return app
+
 
 app = create_application()
 
 if __name__ == "__main__":
-    uvicorn.run("app.main:app", host=config.HOST, port=config.PORT, reload=config.RELOADED)
+    uvicorn.run(
+        "app.main:app",
+        host=config.HOST,
+        port=config.PORT,
+        reload=config.RELOADED
+    )

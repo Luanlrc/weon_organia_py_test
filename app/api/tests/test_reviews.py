@@ -1,13 +1,16 @@
 from dotenv import load_dotenv
+
 load_dotenv()
 
-import pytest
-from httpx import AsyncClient
 import asyncio
 import os
 
+import pytest
+from httpx import AsyncClient
+
 headers = {"Authorization": f"Bearer {os.getenv('BEARER_TOKEN')}"}
 BASE_URL = "http://weon_api:8000"
+
 
 async def wait_for_api(retries=30, delay=1):
     for attempt in range(1, retries + 1):
@@ -32,14 +35,15 @@ async def test_create_review():
             json={
                 "client_name": "Teste Review",
                 "avaliation_date": "2025-06-04",
-                "avaliation": "Gostei bastante do atendimento."
+                "avaliation": "Gostei bastante do atendimento.",
             },
-            headers=headers
+            headers=headers,
         )
         assert response.status_code == 200
         data = response.json()
         assert "id" in data
         assert data["avaliation_type"] in ["positiva", "neutra", "negativa"]
+
 
 @pytest.mark.asyncio
 async def test_list_reviews():
@@ -47,6 +51,7 @@ async def test_list_reviews():
         response = await ac.get("/reviews", headers=headers)
         assert response.status_code == 200
         assert isinstance(response.json(), list)
+
 
 @pytest.mark.asyncio
 async def test_get_review_by_id():
@@ -56,9 +61,9 @@ async def test_get_review_by_id():
             json={
                 "client_name": "Teste Individual",
                 "avaliation_date": "2025-06-04",
-                "avaliation": "Achei o serviço bom, mas poderia ser mais rápido."
+                "avaliation": "Achei o serviço bom, mas poderia ser mais rápido.",
             },
-            headers=headers
+            headers=headers,
         )
         assert post.status_code == 200
         review_id = post.json()["id"]
@@ -67,16 +72,14 @@ async def test_get_review_by_id():
         assert get.status_code == 200
         assert get.json()["id"] == review_id
 
+
 @pytest.mark.asyncio
 async def test_report():
     async with AsyncClient(base_url=BASE_URL) as ac:
         response = await ac.get(
             "/reviews/report",
-            params={
-                "start_date": "2025-06-01",
-                "end_date": "2025-06-30"
-            },
-            headers=headers
+            params={"start_date": "2025-06-01", "end_date": "2025-06-30"},
+            headers=headers,
         )
         assert response.status_code == 200
         assert isinstance(response.json(), list)

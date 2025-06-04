@@ -14,6 +14,20 @@ Este projeto é uma API REST construída com **FastAPI** que classifica automati
 
 ---
 
+## 🔐 Segurança e Proteções
+
+Durante o desenvolvimento, consideramos boas práticas de exposição de APIs em ambientes públicos. APIs FastAPI por padrão expõem automaticamente a documentação interativa (`/docs`, `/redoc`) e o arquivo `openapi.json`, que pode ser facilmente explorado por robôs automatizados que mapeiam endpoints e interagem com eles.
+
+Para mitigar esse risco, foram adotadas as seguintes estratégias:
+
+- 🔒 **Autenticação básica** foi adicionada nas rotas de documentação (`/api/docs`, `/api/redoc`, `/api/openapi.json`), impedindo acesso não autorizado aos contratos da API.
+- 🛡️ **Rotas padrão foram desabilitadas** (`/docs`, `/redoc`, `/openapi.json`) e substituídas por rotas com prefixo `/api/` para evitar exposição direta.
+- 🔑 **Autenticação por token Bearer fixo** foi adicionada como camada extra de segurança para proteção de endpoints sensíveis.
+
+Essas medidas protegem o serviço contra escaneamentos automatizados, reduzem a superfície de ataque e garantem que apenas usuários com conhecimento prévio e autorização possam visualizar e interagir com os recursos da API de maneira controlada.
+
+---
+
 ## 📦 Requisitos
 
 - Docker e Docker Compose instalados

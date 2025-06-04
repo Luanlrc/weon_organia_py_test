@@ -1,9 +1,11 @@
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String, Date, DateTime, func
-from pydantic import BaseModel
 from datetime import date, datetime
 
+from pydantic import BaseModel
+from sqlalchemy import Column, Date, DateTime, Integer, String, func
+from sqlalchemy.ext.declarative import declarative_base
+
 Base = declarative_base()
+
 
 class ReviewDB(Base):
     __tablename__ = "reviews"
@@ -14,10 +16,12 @@ class ReviewDB(Base):
     avaliation_type = Column(String, nullable=False)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
+
 class Review(BaseModel):
     client_name: str
     avaliation_date: date
     avaliation: str
+
 
 class ReviewResponse(BaseModel):
     id: int
@@ -27,6 +31,4 @@ class ReviewResponse(BaseModel):
     avaliation_type: str
     created_at: datetime
 
-    model_config = {
-        "from_attributes": True
-    }
+    model_config = {"from_attributes": True}
