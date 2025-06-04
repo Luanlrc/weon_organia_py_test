@@ -1,18 +1,4 @@
 services:
-  test:
-    build: .
-    container_name: weon_test
-    command: pytest
-    volumes:
-      - .:/app
-    working_dir: /app
-    environment:
-      - PYTHONPATH=/app
-    env_file:
-      - .env
-    depends_on:
-      - db
-
   api:
     build: .
     container_name: weon_api
@@ -40,6 +26,21 @@ services:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+
+  test:
+    build: .
+    container_name: weon_test
+    command: pytest
+    volumes:
+      - .:/app
+    working_dir: /app
+    environment:
+      - PYTHONPATH=/app
+    env_file:
+      - .env
+    depends_on:
+      - db
+      - api
 
 volumes:
   pgdata:

@@ -6,6 +6,9 @@ class Settings(BaseSettings):
     HOST: str = os.getenv("HOST", "0.0.0.0")
     PORT: int = os.getenv("PORT", 8000)
     RELOADED: bool = os.getenv("RELOADED", True)
+    USER: str = os.getenv("USER")
+    PASSWORD: str = os.getenv("PASSWORD")
+    BEARER_TOKEN: str = os.getenv("BEARER_TOKEN")
 
     # DATABASE
     DATABASE_URL: str = os.getenv("DATABASE_URL")
