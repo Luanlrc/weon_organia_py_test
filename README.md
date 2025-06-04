@@ -1,5 +1,32 @@
-# weon_organia_py_test
-Desenvolver uma API REST em Python para classificar automaticamente as avaliações de clientes sobre o serviço/produto/suporte de uma empresa em Positiva, Negativa ou Neutra. A API receberá textos de avaliações e retornará a classificação com base em uma análise de sentimento.
+# 🧠 Weon Organia - API de Classificação de Avaliações
+
+Este projeto é uma API REST construída com **FastAPI** que classifica automaticamente avaliações de clientes como **positiva**, **negativa** ou **neutra** usando **OpenAI**. Os dados são armazenados em um banco **PostgreSQL** e a aplicação está dockerizada para facilitar o uso.
+
+---
+
+## 🚀 Funcionalidades
+
+- 🔍 Classificação de sentimento de avaliações de clientes.
+- 📋 Listagem de todas as avaliações.
+- 📌 Consulta de avaliação por ID.
+- 📊 Geração de relatório por período (com contagem por tipo).
+- ❤️ Análise via OpenAI integrada.
+
+---
+
+## 📦 Requisitos
+
+- Docker e Docker Compose instalados
+
+---
+
+## ⚙️ Como rodar
+
+### 1. Clone o repositório
+```bash
+git clone https://github.com/seuusuario/weon_organia_py_test.git
+cd weon_organia_py_test
+
 
 WEON_ORGANIA_PY_TEST/
 ├── app/
