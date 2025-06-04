@@ -24,7 +24,7 @@ class ReviewController:
                 return ReviewResponse.model_validate(review)
             return {"error": "Review not found"}
 
-    def create_review(self, review: Review): #TODO Adicionar created_at
+    def create_review(self, review: Review):
         with SessionLocal() as db:
             sentiment = agent.classify(review.avaliation)
 

@@ -19,6 +19,8 @@ WEON_ORGANIA_PY_TEST/
 │   │   └── config.py
 │   ├── config.py
 │   └── main.py
+├── tests/
+│   └──test_reviews.py 
 ├── requirements.txt
 ├── README.md
 └── .env
